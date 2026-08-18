@@ -43,9 +43,12 @@ request.
 | 16 | Mobile width (<700px) | Narrow the Framer frame or resize browser | 1 column, no horizontal scroll, no broken card spacing |
 | 17 | Tablet width (700–1000px) | Same | 2 columns |
 | 18 | Desktop width (>1000px) | Same | 3 columns |
-| 19 | Property control: Accent Color | Change in Framer's Properties panel | Badge outline/text, price text, and retry button all update together |
+| 19 | Property control: Accent Color | Change in Framer's Properties panel | Badge outline/text, price text, retry button, and each card's hover spotlight glow all update together |
 | 20 | Property control: Card Radius | Same | Every card and skeleton card's corner radius updates together |
+| 21 | Card spotlight glow | Move the cursor across a card | Glow follows the cursor smoothly, fades in on hover/out on unhover, stays clipped to the card's rounded corners, doesn't cover or dim the text on top |
+| 22 | Reduced motion | OS setting → "reduce motion" (or DevTools → Rendering → emulate `prefers-reduced-motion: reduce`), reload | Spotlight glow's fade transition, card hover-lift, and skeleton shimmer all stop; content is otherwise unaffected |
 
 Scenarios 2–18 line up with the assignment's own 18-point testing list;
-19–20 cover the two property controls explicitly, since "controls actually
-affect the component" is graded separately.
+19–22 cover the two property controls and the two extras added afterward
+(spotlight glow, reduced-motion), since those weren't part of the original
+list but are still real, testable behavior.

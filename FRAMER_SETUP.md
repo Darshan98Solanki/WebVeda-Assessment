@@ -17,25 +17,35 @@ footer. Do it in this order.
 
 ## 2. The courses code component
 
-1. Left sidebar → **Assets** → **Code** → **New Code File**.
-2. Name it `SkillpathCourses.tsx`.
-3. Delete the placeholder content and paste in the full contents of
-   [`src/components/SkillpathCourses.tsx`](./src/components/SkillpathCourses.tsx)
-   from this repo, unchanged — it imports from `"framer"`, which only
-   resolves inside Framer's own runtime, so it needs no edits to work here
-   even though it also runs locally via the `framer-shim.ts` alias (see
-   root `README.md`).
-4. Framer flags a red icon on a syntax error — there shouldn't be one, but
+This one now needs **three** Code Assets, not one — `SkillpathCourses.tsx`
+imports `./SpotlightCard`, and Framer resolves relative imports between
+Code Assets the same way a bundler would, as long as the filenames match
+exactly.
+
+1. Left sidebar → **Assets** → **Code** → **New Code File**, three times:
+   `SkillpathCourses.tsx`, `SpotlightCard.tsx`, `SpotlightCard.css`.
+2. Paste in the full, unchanged contents of each from this repo:
+   [`src/components/SkillpathCourses.tsx`](./src/components/SkillpathCourses.tsx),
+   [`src/components/SpotlightCard.tsx`](./src/components/SpotlightCard.tsx),
+   [`src/components/SpotlightCard.css`](./src/components/SpotlightCard.css).
+   `SkillpathCourses.tsx` imports from `"framer"`, which only resolves
+   inside Framer's own runtime, so it needs no edits to work here even
+   though it also runs locally via the `framer-shim.ts` alias (see root
+   `README.md`).
+3. Framer flags a red icon on a syntax error — there shouldn't be one, but
    if TypeScript complains, it's almost always a stray bracket from
-   copy-paste.
-5. Drag the component from the Assets panel onto the canvas, inside a
-   section/frame you can label "Courses."
-6. Set its frame width to **100% / Fill** of its parent and give it a
+   copy-paste, or the two files not both existing yet with the exact
+   filenames the import expects.
+4. Drag `SkillpathCourses` (not the other two — they're not meant to be
+   dropped on canvas directly, only imported) from the Assets panel onto
+   the canvas, inside a section/frame you can label "Courses."
+5. Set its frame width to **100% / Fill** of its parent and give it a
    reasonable min-height (e.g. 400) so it isn't a 0px sliver while loading.
-7. With it selected, open the right-hand **Properties** panel — **Accent
+6. With it selected, open the right-hand **Properties** panel — **Accent
    Color** and **Card Radius** should show up there. Try changing them; no
    code editing required, that's the whole point of a property control.
-8. Resize the frame itself (drag the side handle) and confirm the grid goes
+   Accent Color now also tints the cards' spotlight glow on hover.
+7. Resize the frame itself (drag the side handle) and confirm the grid goes
    3 → 2 → 1 columns as it narrows. This reacts to the frame's own width,
    so it's previewable right on canvas, not just after publishing.
 

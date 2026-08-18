@@ -169,7 +169,7 @@ identically on canvas and on the published page.
 
 | Control | Type | What it changes |
 |---|---|---|
-| Accent Color | Color | Category badge outline/text, price text, retry button background |
+| Accent Color | Color | Category badge outline/text, price text, retry button background, spotlight glow tint |
 | Card Radius | Number (0–32) | Border radius on every card and the skeleton cards |
 
 Both are visual-only — neither touches data or logic — which is what makes
@@ -177,6 +177,41 @@ them safe to hand to someone who isn't going to read the code. Locally
 (outside Framer) there's no Properties panel to set them from, so
 `src/App.tsx` passes them in as two plain constants shared by the hero and
 the courses section, instead of hardcoding matching values in two places.
+
+## Course card spotlight effect
+
+Each card in `CourseCard` is wrapped in `<SpotlightCard>` — a
+cursor-tracking radial-gradient glow (the reactbits.dev "SpotlightCard"
+pattern), not something written from scratch here. `spotlightColor` is
+`color-mix(in srgb, ${accentColor} 22%, transparent)` rather than a fixed
+color: `color-mix()` accepts hex/rgb/hsl equally, so it works with
+whatever format Framer's color picker returns, and it ties the glow to the
+same Accent Color control already driving everything else on the card
+instead of adding an unrelated fourth color.
+
+Two edits were needed to make the pasted-in component fit this project
+rather than fight it:
+
+- `SpotlightCard.css`'s own `.card-spotlight` originally set
+  `border-radius`/`border`/`background-color`/`padding` — all properties
+  `.sp-card` already owns (themed, dark-mode aware). Since the wrapped div
+  ends up with **both** classes, two rules setting the same properties
+  would come down to unpredictable stylesheet-injection order. Trimmed
+  `.card-spotlight` down to only the spotlight mechanism
+  (`position`/`overflow`/the `::before` gradient); `.sp-card` still owns
+  every other pixel of the card's appearance.
+- `SpotlightCardProps.spotlightColor` was typed as a template literal
+  (`` `rgba(${number}, ${number}, ${number}, ${number})` ``), which can
+  only accept a literal written directly in the prop position — not a
+  value derived from `accentColor` at runtime. Loosened to `string`;
+  nothing in the component's internals actually requires rgba()
+  specifically, it's just interpolated into a CSS custom property.
+
+**This is the one place the courses component is no longer a single
+Framer-pasteable file** — it now imports `./SpotlightCard`. Framer does
+support multiple code files importing each other via relative paths, so
+this still works there; see `FRAMER_SETUP.md` for the extra two Code
+Assets it now needs.
 
 ## Project structure
 
@@ -188,16 +223,24 @@ src/
   framer-shim.ts               local stand-in for the "framer" package (dev-only)
   components/
     Hero.tsx                   plain markup, no fetching
+    VideoBackground.tsx        hero's fullscreen looping <video>, aria-hidden
     Footer.tsx                 plain markup, no fetching
     ThemeToggle.tsx            light/dark toggle, page-level polish, not graded
     SkillpathCourses.tsx       the graded component — all the fetching/state lives here
+    SpotlightCard.tsx / .css   cursor-tracking glow, wraps each course card
 ```
 
-One file per concern, nothing split further than that — a `utils/price.ts`
-or a separate `CourseCard.tsx` file was considered and rejected as more
-files to jump between for no readability gain at this size; `formatPrice`
-and the small presentational sub-components live inside
-`SkillpathCourses.tsx` instead, described in the file's own header comment.
+Mostly one file per concern — `formatPrice` and the small presentational
+sub-components (`CourseCard`, `LoadingSkeleton`, `ErrorState`, `EmptyState`)
+still live inside `SkillpathCourses.tsx` itself rather than their own
+files, described in that file's own header comment. `SpotlightCard.tsx` is
+the one deliberate exception: a third-party-style visual effect (the
+reactbits.dev "SpotlightCard" pattern) is easier to reason about, restyle,
+or remove entirely as its own two files than folded into an
+already-500-line component — and unlike `formatPrice` or `CourseCard`, it
+has nothing to do with fetching, state, or currency logic, so splitting it
+out doesn't cost the "everything about the data flow is in one place"
+property the rest of the file is built around.
 
 ## Scope decisions
 

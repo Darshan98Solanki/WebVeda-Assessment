@@ -1,0 +1,44 @@
+.card-spotlight {
+  /* border-radius/border/background-color/padding deliberately removed
+     from the original — when this wraps SkillpathCourses.tsx's cards, the
+     div ends up with BOTH "card-spotlight" and "sp-card" classes, and
+     .sp-card already owns all of those (themed via CSS custom properties,
+     dark-mode aware). Two classes fighting over the same properties comes
+     down to unpredictable stylesheet-injection order, not something
+     worth relying on — so this file only supplies the spotlight
+     mechanism now, and the wrapped card supplies its own box styling. */
+  position: relative;
+  overflow: hidden;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.05);
+}
+
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 0.6;
+}
+
+/* Not in the original snippet — added to match this project's existing
+   pattern (index.css, SkillpathCourses.tsx) of turning off its own
+   hover/focus motion under this preference rather than assuming a
+   surrounding page already handles it, since this file can end up
+   pasted somewhere that doesn't. */
+@media (prefers-reduced-motion: reduce) {
+  .card-spotlight::before {
+    transition: none;
+  }
+}

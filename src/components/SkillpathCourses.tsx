@@ -1,5 +1,6 @@
 import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
+import SpotlightCard from "./SpotlightCard"
 
 /**
  * Skillpath — Courses Section
@@ -40,6 +41,15 @@ import { addPropertyControls, ControlType } from "framer"
  *    request and makes the browser send a pre-flight OPTIONS call first.
  *    This API 405s anything that isn't a plain GET, so the plainest
  *    possible request is also the only one guaranteed to work.
+ *
+ * One architecture note this file no longer fully lives up to: it was
+ * originally kept single-file specifically so it pastes as ONE Framer code
+ * asset with no relative imports to wire up. Wrapping CourseCard in
+ * SpotlightCard.tsx (for the cursor-tracking glow) breaks that — Framer
+ * DOES support multiple code files importing each other via relative
+ * paths, so this still works there, it just now needs
+ * SpotlightCard.tsx + SpotlightCard.css created as two more Code Assets
+ * alongside this one. See FRAMER_SETUP.md.
  */
 
 const BASE_URL = "https://syncsphere-hiv6.onrender.com"
@@ -241,7 +251,16 @@ function CourseCard(props: {
     const { course, country, countryStatus, accentColor, cornerRadius, onRetryCountry } = props
 
     return (
-        <div className="sp-card" style={{ borderRadius: cornerRadius }}>
+        <SpotlightCard
+            className="sp-card"
+            style={{ borderRadius: cornerRadius }}
+            // color-mix(), not a hand-built rgba() — this needs to work
+            // with whatever format Framer's color picker hands back
+            // (hex/rgb/hsl all work as the first argument), and it's the
+            // same accent color already driving the badge/price/retry
+            // button rather than a hardcoded fourth color.
+            spotlightColor={`color-mix(in srgb, ${accentColor} 22%, transparent)`}
+        >
             <div className="sp-card-top">
                 <span className="sp-badge" style={{ color: accentColor, borderColor: accentColor }}>
                     {course.mainCategory}
@@ -270,7 +289,7 @@ function CourseCard(props: {
                     </span>
                 )}
             </div>
-        </div>
+        </SpotlightCard>
     )
 }
 
@@ -404,6 +423,10 @@ const css = `
 .sp-grid { display:grid; gap:20px; width:100%; }
 
 .sp-card {
+    /* No position/overflow here — SpotlightCard.css's .card-spotlight
+       supplies position:relative + overflow:hidden (both classes land on
+       the same div), and its own ::before paints the cursor-tracking
+       glow. This rule owns the card's actual box styling only. */
     border:1px solid var(--sp-border, #eaeaea);
     background:var(--sp-card-bg, #ffffff);
     padding:20px;
@@ -466,4 +489,16 @@ const css = `
 @keyframes sp-shimmer { 0% { background-position:100% 50%; } 100% { background-position:0 50%; } }
 
 .sp-retry:focus-visible, .sp-inline-retry:focus-visible { outline:2px solid var(--sp-focus, #111); outline-offset:2px; }
+
+/* This component's own hover motion (card lift/shadow, the skeleton
+   shimmer) isn't guaranteed to inherit a prefers-reduced-motion rule from
+   whatever page it's dropped into — the Framer canvas in particular won't
+   have this project's index.css. So it carries its own guard rather than
+   relying on one. (SpotlightCard.css has the equivalent guard for the
+   glow effect it adds — see that file.) */
+@media (prefers-reduced-motion: reduce) {
+    .sp-card { transition: background-color 0.25s ease, border-color 0.25s ease; }
+    .sp-card:hover { transform: none; }
+    .sp-skel-line, .sp-price-skeleton { animation: none; }
+}
 `
