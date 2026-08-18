@@ -21,8 +21,6 @@
     --text-muted-2: #666666;
     --text-faint: #888888;
     --border: #eaeaea;
-    --hero-grad-start: #f2f2ff;
-    --hero-grad-end: #fafafa;
 
     /* Consumed by SkillpathCourses.tsx (prefixed so they read as
        belonging to that component even though they're defined here). */
@@ -51,8 +49,6 @@
     --text-muted-2: #a1a1a9;
     --text-faint: #86868f;
     --border: #2b2c32;
-    --hero-grad-start: #1d1d2b;
-    --hero-grad-end: #131316;
 
     --sp-card-bg: #1b1c20;
     --sp-border: #2b2c32;

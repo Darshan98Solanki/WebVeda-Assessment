@@ -41,24 +41,33 @@ footer. Do it in this order.
 
 ## 3. Hero (above the courses section)
 
-Plain Framer, no code — copy the exact copy and colors from
+Video background + a Stack on top, copying the exact copy/colors from
 [`src/components/Hero.tsx`](./src/components/Hero.tsx) /
 [`src/App.css`](./src/App.css) so the local preview and the Framer version
 match, rather than improvising new copy in Framer:
 
-- **Stack** (vertical, centered, gap ~16px):
-  - "Skillpath" wordmark — bold, small, uppercase, accent color (`#5B5FEF`),
-    sits above the headline like a brand mark.
-  - Headline: *"Learn the skill. Skip the fluff."* Large (~48px desktop),
-    tight line-height, near-black (`#111`).
-  - Subhead: *"Short, practical courses built by people who actually do
-    the work."* Muted gray (`#555`), same tone as the course card
-    description text, for consistency.
-  - A **Button** labeled *"Browse courses"*. Use the same accent color as
-    the code component's property control (default `#5B5FEF`) as the
-    button background, and match its corner radius to the **Card Radius**
-    control's value (default `14`) so the two sections read as one system.
-    Link it to the courses section (anchor or scroll-to).
+1. Give the hero frame `position: relative`, `overflow: hidden`.
+2. Add a **Video** element filling the frame (Fill width/height): source
+   `https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4`,
+   autoplay on, loop on, muted on (Framer requires muted for autoplay to
+   work, same as the browser rule the code follows).
+3. Add a flat dark rectangle on top, also filling the frame:
+   `rgba(8, 9, 14, 0.55)` — this is the scrim; without it the text below
+   won't reliably read against the footage.
+4. On top of both, a **Stack** (vertical, centered, gap ~16px):
+   - "Skillpath" wordmark — bold, small, uppercase, accent color
+     (`#5B5FEF`), sits above the headline like a brand mark.
+   - Headline: *"Learn the skill. Skip the fluff."* Large (~48px desktop),
+     tight line-height, **white** (`#fff`, not near-black — this is on
+     video now, not the page background, so it doesn't follow the
+     light/dark toggle).
+   - Subhead: *"Short, practical courses built by people who actually do
+     the work."* `rgba(255,255,255,0.78)`.
+   - A **Button** labeled *"Browse courses"*. Use the same accent color as
+     the code component's property control (default `#5B5FEF`) as the
+     button background, and match its corner radius to the **Card Radius**
+     control's value (default `14`) so the two sections read as one system.
+     Link it to the courses section (anchor or scroll-to).
 
 ## 4. Footer (below the courses section)
 

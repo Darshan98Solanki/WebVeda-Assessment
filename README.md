@@ -66,6 +66,29 @@ item, and worth being able to explain on its own terms if it comes up:
   falling back to `prefers-color-scheme`). A React `useEffect` can't do
   this — effects run after the first paint, which is exactly when a
   flash-of-wrong-theme would happen.
+- **One exception: the hero doesn't follow the toggle.** See the next
+  section — it sits on a video background instead of the page's `--bg`
+  token, so it isn't part of this system.
+
+## Hero video background
+
+Pulled in from a separate project ("Velorah," a standalone hero-page build,
+not part of this repo): a fullscreen looping `<video>`
+([`VideoBackground.tsx`](./src/components/VideoBackground.tsx)) behind the
+existing headline/subhead/CTA, with a flat dark scrim
+(`rgba(8, 9, 14, 0.55)`) between the video and the text for a guaranteed
+contrast floor regardless of what frame is currently playing.
+
+This is the one place in the app that deliberately **opts out** of the
+light/dark toggle: `.hero-headline` and `.hero-subhead` in `App.css` use
+fixed white / near-white colors instead of `var(--text)` /
+`var(--text-muted)`. A cinematic video reads as "dark" no matter which
+theme a visitor has chosen, so inverting the hero's text to near-black in
+light mode would make it unreadable against the same footage — the hero
+just isn't part of that system, and everything below it (courses, footer)
+still is. The video itself is `aria-hidden` and untabbable, since it
+carries no information — same treatment as the equivalent component in the
+Velorah project.
 
 ## What it does
 
