@@ -52,6 +52,15 @@ item, and worth being able to explain on its own terms if it comes up:
   component still looks like its normal light-mode self there. The toggle
   is a page-level feature; the graded component didn't need a third
   property control to support it.
+- The swap cross-fades rather than snapping: `index.css` puts a blanket
+  `transition: background-color, border-color, color, fill, stroke`
+  (0.25s) on `*`, so every card, border, and label that changed color
+  animates together instead of only `body`'s background/text doing so.
+  Scoped to color-ish properties on purpose — no layout property is in
+  that list, so it can't introduce a layout animation by accident — and
+  turned off entirely under `prefers-reduced-motion: reduce`. The toggle
+  button itself also gets a small rotate-on-hover and a pop-in on its
+  sun/moon icon swap, both skipped under the same media query.
 - A tiny **inline, non-module `<script>` in `index.html`** sets the
   `data-theme` attribute before first paint (reading `localStorage`, then
   falling back to `prefers-color-scheme`). A React `useEffect` can't do

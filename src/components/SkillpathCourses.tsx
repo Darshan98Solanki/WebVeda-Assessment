@@ -411,7 +411,7 @@ const css = `
     display:flex;
     flex-direction:column;
     gap:10px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 .sp-card:hover { transform: translateY(-2px); box-shadow: var(--sp-card-hover-shadow, 0 10px 24px rgba(17,17,17,0.08)); }
 

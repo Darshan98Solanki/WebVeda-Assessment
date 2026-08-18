@@ -17,11 +17,39 @@
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
 }
 
 .theme-toggle:hover {
-    transform: translateY(-1px);
+    transform: translateY(-1px) rotate(8deg);
+}
+
+/* A quick pop on the icon itself whenever the button's children change
+   (i.e. the sun/moon swap) — restarts on every mount because it's a CSS
+   animation, not a transition, so switching themes back and forth keeps
+   re-triggering it rather than only firing once. */
+.theme-toggle svg {
+    animation: sp-icon-pop 0.25s ease;
+}
+
+@keyframes sp-icon-pop {
+    from {
+        transform: scale(0.5) rotate(-45deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle svg {
+        animation: none;
+    }
+    .theme-toggle:hover {
+        transform: none;
+    }
 }
 
 .theme-toggle:focus-visible {

@@ -73,11 +73,36 @@
     box-sizing: border-box;
 }
 
+/* Every element that reads one of the tokens above (background-color,
+   border-color, color, fill/stroke for the toggle's SVG icons) cross-fades
+   when data-theme flips, instead of only body's background/text doing so
+   while every card, border, and icon underneath snaps instantly. This is
+   deliberately scoped to color-ish properties only — layout properties
+   (width, transform, etc.) are left alone so this can't introduce a
+   layout animation anywhere by accident. Elements that need a different
+   transition (e.g. .sp-card's hover lift, .theme-toggle's hover nudge)
+   declare their own `transition`, which — being a more specific selector —
+   overrides this rule for that element; both lists just need to include
+   the color properties too, which they already do. */
+*,
+*::before,
+*::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, fill 0.25s ease,
+        stroke 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none;
+    }
+}
+
 body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 #root {
