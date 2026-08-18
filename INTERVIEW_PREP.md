@@ -170,3 +170,13 @@ explicitly lower priority than correctness, error handling, and
 explainability. Leaving them out kept the component small enough that
 every line has a clear reason to exist, which mattered more here than
 maximizing feature count.
+
+**"Why does the page have a dark mode toggle — that wasn't in the brief?"**
+— Added afterwards, deliberately outside the graded component: it's a
+page-level feature (`ThemeToggle.tsx`, `index.css`), not a third property
+control on `SkillpathCourses.tsx`. The brief asked for exactly two
+controls, and dark mode doesn't need to be one of them — the component
+just reads CSS custom properties (`var(--sp-card-bg, #ffffff)`) that
+`index.css` happens to redefine under `:root[data-theme="dark"]`. Paste
+the same component into Framer, where those variables are never defined,
+and the fallback values render it in plain light mode, unchanged.

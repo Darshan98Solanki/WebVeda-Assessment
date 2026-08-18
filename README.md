@@ -35,6 +35,29 @@ canvas runtime — it isn't on npm. `vite.config.ts` aliases that import to
 exact same file both runs here via Vite and pastes unchanged into a Framer
 code component later — see the comment at the top of the shim for why.
 
+## Theme toggle (light/dark)
+
+Not part of the graded brief — added afterwards as a local-preview polish
+item, and worth being able to explain on its own terms if it comes up:
+
+- [`ThemeToggle.tsx`](./src/components/ThemeToggle.tsx) is a fixed-position
+  button that flips `document.documentElement.dataset.theme` between
+  `"light"`/`"dark"` and persists the choice in `localStorage`.
+- Every color in `App.css` and in `SkillpathCourses.tsx`'s own injected
+  `<style>` reads a CSS custom property — e.g. `var(--sp-card-bg,
+  #ffffff)` — defined once in [`src/index.css`](./src/index.css) under
+  bare `:root` (light) and `:root[data-theme="dark"]` (dark). The fallback
+  value after the comma is what renders if those variables are never
+  defined at all — which is exactly the situation inside Framer, so the
+  component still looks like its normal light-mode self there. The toggle
+  is a page-level feature; the graded component didn't need a third
+  property control to support it.
+- A tiny **inline, non-module `<script>` in `index.html`** sets the
+  `data-theme` attribute before first paint (reading `localStorage`, then
+  falling back to `prefers-color-scheme`). A React `useEffect` can't do
+  this — effects run after the first paint, which is exactly when a
+  flash-of-wrong-theme would happen.
+
 ## What it does
 
 Fetches `GET /assignment/course-data` (5–10 courses, count varies between
@@ -123,6 +146,7 @@ src/
   components/
     Hero.tsx                   plain markup, no fetching
     Footer.tsx                 plain markup, no fetching
+    ThemeToggle.tsx            light/dark toggle, page-level polish, not graded
     SkillpathCourses.tsx       the graded component — all the fetching/state lives here
 ```
 

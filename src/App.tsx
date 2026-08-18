@@ -1,6 +1,7 @@
 import Hero from "./components/Hero"
 import SkillpathCourses from "./components/SkillpathCourses"
 import Footer from "./components/Footer"
+import ThemeToggle from "./components/ThemeToggle"
 import "./App.css"
 
 // Single source of truth for the two values Framer's Properties panel would
@@ -15,6 +16,8 @@ const CARD_RADIUS = 14
 function App() {
     return (
         <>
+            <ThemeToggle />
+
             <Hero accentColor={ACCENT_COLOR} cornerRadius={CARD_RADIUS} />
 
             <main className="courses-section" id="courses">

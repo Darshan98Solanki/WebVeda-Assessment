@@ -392,32 +392,44 @@ const styles: Record<string, React.CSSProperties> = {
     },
 }
 
+// Every color below reads a CSS custom property with a light-mode fallback
+// — e.g. var(--sp-card-bg, #ffffff) — rather than a bare hex value. Inside
+// Framer, or anywhere these variables aren't defined, the fallback makes
+// this render exactly as plain light-mode. On this project's own pages,
+// src/index.css defines the same variable names under
+// :root[data-theme="dark"], so the identical component picks up dark
+// colors automatically without needing a "dark mode" prop of its own —
+// it's just responding to custom properties set by whatever page it's on.
 const css = `
 .sp-grid { display:grid; gap:20px; width:100%; }
 
 .sp-card {
-    border:1px solid #eaeaea;
-    background:#fff;
+    border:1px solid var(--sp-border, #eaeaea);
+    background:var(--sp-card-bg, #ffffff);
     padding:20px;
     box-sizing:border-box;
     display:flex;
     flex-direction:column;
     gap:10px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
-.sp-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(17,17,17,0.08); }
+.sp-card:hover { transform: translateY(-2px); box-shadow: var(--sp-card-hover-shadow, 0 10px 24px rgba(17,17,17,0.08)); }
 
 .sp-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
 .sp-badge {
     font-size:11px; font-weight:600; letter-spacing:0.02em;
     border:1px solid; border-radius:999px; padding:3px 10px; white-space:nowrap;
 }
-.sp-badge-refund { color:#1a7f4b; border-color:#bfe8d2; background:#eafaf1; }
+.sp-badge-refund {
+    color:var(--sp-refund-fg, #1a7f4b);
+    border-color:var(--sp-refund-border, #bfe8d2);
+    background:var(--sp-refund-bg, #eafaf1);
+}
 
-.sp-title { font-size:17px; font-weight:600; margin:0; color:#111; line-height:1.3; }
+.sp-title { font-size:17px; font-weight:600; margin:0; color:var(--sp-text, #111); line-height:1.3; }
 
 .sp-desc {
-    font-size:14px; color:#555; margin:0; line-height:1.45;
+    font-size:14px; color:var(--sp-text-muted, #555); margin:0; line-height:1.45;
     display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical;
     overflow:hidden;
     min-height: calc(1.45em * 2); /* holds card height steady when a description is short */
@@ -425,26 +437,26 @@ const css = `
 
 .sp-price-row { margin-top:auto; padding-top:8px; min-height:28px; display:flex; align-items:center; }
 .sp-price { font-size:19px; font-weight:700; }
-.sp-price-unavailable { font-size:13px; color:#888; }
+.sp-price-unavailable { font-size:13px; color:var(--sp-text-faint, #888); }
 .sp-inline-retry {
     background:none; border:none; padding:0; margin:0;
     color:inherit; text-decoration:underline; cursor:pointer; font:inherit;
 }
 .sp-price-skeleton {
     width:84px; height:18px; border-radius:6px;
-    background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);
+    background:linear-gradient(90deg, var(--sp-skeleton-a, #eee) 25%, var(--sp-skeleton-b, #f5f5f5) 37%, var(--sp-skeleton-a, #eee) 63%);
     background-size:400% 100%; animation: sp-shimmer 1.4s ease infinite;
 }
 
 .sp-status { padding:64px 20px; text-align:center; }
-.sp-status-title { font-size:17px; font-weight:600; color:#111; margin:0 0 6px; }
-.sp-status-body { font-size:14px; color:#666; margin:0 0 18px; }
+.sp-status-title { font-size:17px; font-weight:600; color:var(--sp-text, #111); margin:0 0 6px; }
+.sp-status-body { font-size:14px; color:var(--sp-text-muted-2, #666); margin:0 0 18px; }
 .sp-retry { border:none; padding:10px 22px; border-radius:8px; color:#fff; font-weight:600; font-size:14px; cursor:pointer; }
 
 .sp-skeleton { overflow:hidden; }
 .sp-skel-line {
     height:12px; border-radius:6px;
-    background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);
+    background:linear-gradient(90deg, var(--sp-skeleton-a, #eee) 25%, var(--sp-skeleton-b, #f5f5f5) 37%, var(--sp-skeleton-a, #eee) 63%);
     background-size:400% 100%; animation: sp-shimmer 1.4s ease infinite;
 }
 .sp-skel-badge { height:16px; width:35%; border-radius:999px; }
@@ -453,5 +465,5 @@ const css = `
 .sp-skel-price { width:30%; height:18px; margin-top:8px; }
 @keyframes sp-shimmer { 0% { background-position:100% 50%; } 100% { background-position:0 50%; } }
 
-.sp-retry:focus-visible, .sp-inline-retry:focus-visible { outline:2px solid #111; outline-offset:2px; }
+.sp-retry:focus-visible, .sp-inline-retry:focus-visible { outline:2px solid var(--sp-focus, #111); outline-offset:2px; }
 `
