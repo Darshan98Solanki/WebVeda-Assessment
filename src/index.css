@@ -69,6 +69,21 @@
     box-sizing: border-box;
 }
 
+/* The hero is now a full viewport tall, so "Browse courses" scrolling to
+   #courses is an actual, noticeable jump rather than a few pixels —
+   worth animating. Lives on :root rather than as a scroll-behavior
+   inline attribute so the prefers-reduced-motion override below can
+   turn it off in one place. */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 /* Every element that reads one of the tokens above (background-color,
    border-color, color, fill/stroke for the toggle's SVG icons) cross-fades
    when data-theme flips, instead of only body's background/text doing so

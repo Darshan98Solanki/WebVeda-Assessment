@@ -90,6 +90,17 @@ still is. The video itself is `aria-hidden` and untabbable, since it
 carries no information — same treatment as the equivalent component in the
 Velorah project.
 
+**Sized to actually show it off:** `.hero` is `min-height: 100svh` (not a
+fixed `height`, so genuinely oversized content — huge zoom, large font
+overrides — can still push it taller instead of clipping; `svh` rather than
+`vh` so mobile browser chrome that shows/hides on scroll doesn't leave a
+gap under the video), with the content flex-centered inside it. Without
+that, the video was cropped down to whatever short strip the
+padding-driven hero used to be — the opposite of "fullscreen." `html {
+scroll-behavior: smooth }` was added alongside it so "Browse courses" now
+covers a real, noticeable scroll distance down to `#courses`, off under
+`prefers-reduced-motion` like the rest of this project's motion.
+
 ## What it does
 
 Fetches `GET /assignment/course-data` (5–10 courses, count varies between

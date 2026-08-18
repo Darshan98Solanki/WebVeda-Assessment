@@ -64,7 +64,18 @@
 .hero {
     position: relative;
     overflow: hidden;
-    padding: 96px 24px 88px;
+    /* 100svh (not 100vh) so mobile browser chrome — the address bar that
+       shows/hides on scroll — doesn't leave a gap under the video or clip
+       it short; svh accounts for the smallest on-screen viewport instead
+       of assuming the address bar is always hidden. min-, not a fixed
+       height, so content that genuinely needs more room (very large
+       zoom, huge font overrides) can still push the section taller
+       instead of clipping. */
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px;
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -216,7 +227,7 @@
 
 @media (max-width: 600px) {
     .hero {
-        padding: 72px 20px 64px;
+        padding: 96px 20px;
     }
     .courses-section {
         padding: 48px 16px;

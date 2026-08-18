@@ -46,7 +46,10 @@ Video background + a Stack on top, copying the exact copy/colors from
 [`src/App.css`](./src/App.css) so the local preview and the Framer version
 match, rather than improvising new copy in Framer:
 
-1. Give the hero frame `position: relative`, `overflow: hidden`.
+1. Set the hero frame's height to **Viewport Height (100vh)** (or fill the
+   screen height) rather than "Fit content" — a video cropped down to a
+   content-sized strip defeats the point of a fullscreen background.
+   `overflow: hidden`, content vertically centered inside it.
 2. Add a **Video** element filling the frame (Fill width/height): source
    `https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4`,
    autoplay on, loop on, muted on (Framer requires muted for autoplay to
