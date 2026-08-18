@@ -1,8 +1,10 @@
 # Wiring this up in Framer
 
-Framer's canvas can't be built by pasting a file into it — this is the
-manual path, roughly 20 minutes including the hero and footer. Do it in
-this order.
+This project runs locally as a normal Vite app (`npm run dev`) for
+development and review — see the root `README.md`. Framer's canvas can't be
+built by pasting a whole project into it, though, so getting it live on
+Framer is a separate manual path, roughly 20 minutes including the hero and
+footer. Do it in this order.
 
 ## 1. New project
 
@@ -18,7 +20,11 @@ this order.
 1. Left sidebar → **Assets** → **Code** → **New Code File**.
 2. Name it `SkillpathCourses.tsx`.
 3. Delete the placeholder content and paste in the full contents of
-   [`SkillpathCourses.tsx`](./SkillpathCourses.tsx) from this repo.
+   [`src/components/SkillpathCourses.tsx`](./src/components/SkillpathCourses.tsx)
+   from this repo, unchanged — it imports from `"framer"`, which only
+   resolves inside Framer's own runtime, so it needs no edits to work here
+   even though it also runs locally via the `framer-shim.ts` alias (see
+   root `README.md`).
 4. Framer flags a red icon on a syntax error — there shouldn't be one, but
    if TypeScript complains, it's almost always a stray bracket from
    copy-paste.
@@ -35,32 +41,34 @@ this order.
 
 ## 3. Hero (above the courses section)
 
-Plain Framer, no code — but keep it visually consistent with the courses
-section below it, since that consistency is part of the brief:
+Plain Framer, no code — copy the exact copy and colors from
+[`src/components/Hero.tsx`](./src/components/Hero.tsx) /
+[`src/App.css`](./src/App.css) so the local preview and the Framer version
+match, rather than improvising new copy in Framer:
 
 - **Stack** (vertical, centered, gap ~16px):
-  - "Skillpath" wordmark/logo text — bold, small, sits above the headline
-    like a brand mark, not styled as the headline itself.
-  - Headline — e.g. *"Learn the skill. Skip the fluff."* Large, tight
-    line-height, dark near-black text (`#111`), not pure black.
-  - One-line subhead — e.g. *"Short, practical courses built by people who
-    actually do the work."* Muted gray (`#555`), same as the course card
-    description color, for consistency.
-  - A **Button** — label *"Browse courses"*. Use the same accent color you
-    set on the code component's property control (default `#5B5FEF`) as
-    the button background, and match its corner radius to the **Card
-    Radius** control's value (default `14`) so the two sections read as
-    one system, not two different UI kits stitched together. Link it to
-    the courses section (anchor or scroll-to).
+  - "Skillpath" wordmark — bold, small, uppercase, accent color (`#5B5FEF`),
+    sits above the headline like a brand mark.
+  - Headline: *"Learn the skill. Skip the fluff."* Large (~48px desktop),
+    tight line-height, near-black (`#111`).
+  - Subhead: *"Short, practical courses built by people who actually do
+    the work."* Muted gray (`#555`), same tone as the course card
+    description text, for consistency.
+  - A **Button** labeled *"Browse courses"*. Use the same accent color as
+    the code component's property control (default `#5B5FEF`) as the
+    button background, and match its corner radius to the **Card Radius**
+    control's value (default `14`) so the two sections read as one system.
+    Link it to the courses section (anchor or scroll-to).
 
 ## 4. Footer (below the courses section)
 
-- **Stack** (horizontal, space-between, muted background or just a top
-  border to separate it from the page):
-  - Three text links — e.g. *About*, *Contact*, *Terms*. Link them to `#`
-    or a blank page; they don't need to go anywhere real for this
-    assignment.
-  - A copyright line — e.g. *"© 2026 Skillpath. All rights reserved."*
+Copy from [`src/components/Footer.tsx`](./src/components/Footer.tsx):
+
+- **Stack** (horizontal, space-between, top border to separate it from the
+  page):
+  - Three text links: *About*, *Contact*, *Terms*. Link them to `#` or a
+    blank page; they don't need to go anywhere real for this assignment.
+  - Copyright line: *"© 2026 Skillpath. All rights reserved."*
 
 ## 5. Publish
 

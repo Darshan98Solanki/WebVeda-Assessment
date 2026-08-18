@@ -1,5 +1,11 @@
 # Manual testing checklist
 
+Run `npm run dev` and test against `http://localhost:5173` — faster to
+iterate on than the Framer canvas, and it's the same
+`src/components/SkillpathCourses.tsx` file either way. Re-verify the ones
+that matter most (2, 4, 16–18) once it's actually pasted into Framer per
+`FRAMER_SETUP.md`, since that's what ships.
+
 The API's failures are probabilistic (~1/3 of calls), not switchable on
 demand, so most of this is repeated refreshing rather than a mock server —
 reasonable for this scope. Two temporary tricks make the unlikely paths

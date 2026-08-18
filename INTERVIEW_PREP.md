@@ -1,7 +1,8 @@
 # Interview prep
 
-Read this alongside `SkillpathCourses.tsx` open — it's written to be
-pointed at ("why is this line here") on the call, not read on its own.
+Read this alongside `src/components/SkillpathCourses.tsx` open — it's
+written to be pointed at ("why is this line here") on the call, not read
+on its own.
 
 ## Walkthrough of the parts most likely to get picked
 

@@ -1,18 +1,39 @@
-# Skillpath — Courses Section (Framer code component)
+# Skillpath
 
-This is the graded part of a junior-developer assessment: a landing page for
-a fictional learning platform, "Skillpath," where one section (Courses)
-pulls live data from a flaky API through a hand-written React code
-component. This repo holds that component and everything needed to explain
-and wire it up.
+A landing page for a fictional learning platform, "Skillpath," built as a
+junior-developer assessment. It's a real Vite + React + TypeScript project
+— not just a snippet — so the whole page (hero, courses, footer) runs and
+is reviewable locally, with the courses section built as a standalone code
+component that also pastes unchanged into Framer.
 
-- [`SkillpathCourses.tsx`](./SkillpathCourses.tsx) — the code component
-- [`FRAMER_SETUP.md`](./FRAMER_SETUP.md) — how to build the rest of the page
-  around it (hero, footer, publish)
+- [`src/components/SkillpathCourses.tsx`](./src/components/SkillpathCourses.tsx)
+  — the graded part: the live-data code component
+- [`src/components/Hero.tsx`](./src/components/Hero.tsx),
+  [`src/components/Footer.tsx`](./src/components/Footer.tsx),
+  [`src/App.tsx`](./src/App.tsx) — the rest of the page, plain
+  React/CSS, no fetching
+- [`FRAMER_SETUP.md`](./FRAMER_SETUP.md) — how to move this into an actual
+  Framer project and publish it
 - [`TESTING.md`](./TESTING.md) — manual test checklist, all 18 scenarios
 - [`INTERVIEW_PREP.md`](./INTERVIEW_PREP.md) — line-by-line explanation of
   the parts most likely to get pointed at on the call
 - [`NOTE.md`](./NOTE.md) — the submission note + AI usage statement
+
+## Running it locally
+
+```bash
+npm install
+npm run dev      # http://localhost:5173 — full page, hits the live API
+npm run build    # type-checks (tsc -b) then production-builds with Vite
+npm run lint     # oxlint
+```
+
+`SkillpathCourses.tsx` imports `addPropertyControls` / `ControlType` from
+`"framer"`, which is a real package but only resolves inside Framer's own
+canvas runtime — it isn't on npm. `vite.config.ts` aliases that import to
+[`src/framer-shim.ts`](./src/framer-shim.ts), a small no-op stand-in, so the
+exact same file both runs here via Vite and pastes unchanged into a Framer
+code component later — see the comment at the top of the shim for why.
 
 ## What it does
 
@@ -86,7 +107,30 @@ identically on canvas and on the published page.
 | Card Radius | Number (0–32) | Border radius on every card and the skeleton cards |
 
 Both are visual-only — neither touches data or logic — which is what makes
-them safe to hand to someone who isn't going to read the code.
+them safe to hand to someone who isn't going to read the code. Locally
+(outside Framer) there's no Properties panel to set them from, so
+`src/App.tsx` passes them in as two plain constants shared by the hero and
+the courses section, instead of hardcoding matching values in two places.
+
+## Project structure
+
+```
+src/
+  main.tsx                     entry point, mounts <App/>
+  App.tsx                      composes Hero + courses section + Footer
+  App.css / index.css          layout + reset (plain CSS, no framework)
+  framer-shim.ts               local stand-in for the "framer" package (dev-only)
+  components/
+    Hero.tsx                   plain markup, no fetching
+    Footer.tsx                 plain markup, no fetching
+    SkillpathCourses.tsx       the graded component — all the fetching/state lives here
+```
+
+One file per concern, nothing split further than that — a `utils/price.ts`
+or a separate `CourseCard.tsx` file was considered and rejected as more
+files to jump between for no readability gain at this size; `formatPrice`
+and the small presentational sub-components live inside
+`SkillpathCourses.tsx` instead, described in the file's own header comment.
 
 ## Scope decisions
 

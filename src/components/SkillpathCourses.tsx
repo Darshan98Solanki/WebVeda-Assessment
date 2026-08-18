@@ -125,6 +125,10 @@ function useCourses() {
 
     React.useEffect(() => {
         let cancelled = false
+        // A no-op on mount (state already starts at "loading"), but this is
+        // what makes the retry button work: bumping `attempt` re-runs this
+        // effect, and this line is what resets status away from "error" or
+        // "ready" back to "loading" before the new request starts.
         setStatus("loading")
 
         async function load() {
@@ -168,6 +172,8 @@ function useCountry() {
 
     React.useEffect(() => {
         let cancelled = false
+        // Same reasoning as useCourses above: resets status back to
+        // "loading" when the inline "retry" button bumps `attempt`.
         setStatus("loading")
 
         async function load() {

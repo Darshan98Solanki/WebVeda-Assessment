@@ -1,0 +1,140 @@
+/* ---------------------------------------------------------------------- */
+/* Hero */
+/* ---------------------------------------------------------------------- */
+
+.hero {
+    padding: 96px 24px 88px;
+    text-align: center;
+    background: linear-gradient(180deg, #f2f2ff 0%, #fafafa 100%);
+    border-bottom: 1px solid #eee;
+}
+
+.hero-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.hero-brand {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5b5fef;
+}
+
+.hero-headline {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0;
+    color: #111;
+}
+
+.hero-subhead {
+    font-size: 17px;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
+    max-width: 480px;
+}
+
+.hero-cta {
+    margin-top: 8px;
+    display: inline-block;
+    padding: 13px 28px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.hero-cta:hover {
+    opacity: 0.92;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Courses section */
+/* ---------------------------------------------------------------------- */
+
+.courses-section {
+    flex: 1;
+    padding: 72px 24px;
+}
+
+.courses-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.courses-heading {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: #111;
+    text-align: center;
+}
+
+.courses-subhead {
+    font-size: 15px;
+    color: #666;
+    margin: 0 0 40px;
+    text-align: center;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Footer */
+/* ---------------------------------------------------------------------- */
+
+.footer {
+    border-top: 1px solid #eee;
+    padding: 28px 24px;
+}
+
+.footer-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #555;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #111;
+    text-decoration: underline;
+}
+
+.footer-copyright {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 72px 20px 64px;
+    }
+    .courses-section {
+        padding: 48px 16px;
+    }
+    .footer-inner {
+        justify-content: center;
+        text-align: center;
+    }
+}
