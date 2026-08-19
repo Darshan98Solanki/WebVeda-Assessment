@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local env vars — .env.example documents the shape, real values stay
+# out of git.
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

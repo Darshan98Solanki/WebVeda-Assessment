@@ -52,7 +52,12 @@ import SpotlightCard from "./SpotlightCard"
  * alongside this one. See FRAMER_SETUP.md.
  */
 
-const BASE_URL = "https://syncsphere-hiv6.onrender.com"
+// Read from Vite's env (.env / .env.example define VITE_BASE_URL) with the
+// live URL as a literal fallback — that fallback isn't optional. Pasted
+// into Framer as a Code Asset (see FRAMER_SETUP.md), this file runs outside
+// Vite entirely, so import.meta.env won't exist there and the hardcoded
+// value is what actually serves the request on that path.
+const BASE_URL = import.meta.env?.VITE_BASE_URL ?? "https://syncsphere-hiv6.onrender.com"
 const COURSES_ENDPOINT = `${BASE_URL}/assignment/course-data`
 const COUNTRY_ENDPOINT = `${BASE_URL}/assignment/country-code`
 
