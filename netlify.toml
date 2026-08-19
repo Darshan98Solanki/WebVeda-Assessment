@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# react-router-dom's BrowserRouter needs every path to resolve to
+# index.html so client-side routing can take over — without this,
+# refreshing (or deep-linking) any route other than "/" 404s at the
+# Netlify edge before React ever loads.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
