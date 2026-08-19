@@ -161,10 +161,26 @@
 
 .courses-section {
     flex: 1;
+    position: relative;
+    /* Clips CursorGrid's canvas to the section instead of letting it
+       spill into the padding/next section's box. */
+    overflow: hidden;
     padding: 72px 24px;
 }
 
+/* CursorGrid fills its parent and positions itself absolutely — this div
+   just gives it a full-bleed layer behind .courses-inner to do that in,
+   so the grid effect reads as the section's background. */
+.courses-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .courses-inner {
+    position: relative;
+    z-index: 1;
     max-width: 1180px;
     margin: 0 auto;
 }
@@ -182,6 +198,47 @@
     color: var(--text-muted-2);
     margin: 0 0 40px;
     text-align: center;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 404 — not found */
+/* ---------------------------------------------------------------------- */
+
+.not-found {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+    /* Fixed dark background, not var(--bg) — FuzzyText bakes its color
+       into canvas pixels once on mount (see the comment in
+       NotFoundPage.tsx), so the page around it is pinned dark too rather
+       than cross-fading with the light/dark toggle and clashing. */
+    background: #0b0b0d;
+}
+
+.not-found canvas {
+    max-width: 100%;
+}
+
+.not-found-message {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.not-found-link {
+    color: #5b5fef;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.not-found-link:hover {
+    text-decoration: underline;
 }
 
 /* ---------------------------------------------------------------------- */

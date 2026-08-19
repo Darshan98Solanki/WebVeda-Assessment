@@ -1,6 +1,6 @@
-import Hero from "./components/Hero"
-import SkillpathCourses from "./components/SkillpathCourses"
-import Footer from "./components/Footer"
+import { Routes, Route } from "react-router-dom"
+import HomePage from "./components/HomePage"
+import NotFoundPage from "./components/NotFoundPage"
 import ThemeToggle from "./components/ThemeToggle"
 import "./App.css"
 
@@ -18,19 +18,11 @@ function App() {
         <>
             <ThemeToggle />
 
-            <Hero accentColor={ACCENT_COLOR} cornerRadius={CARD_RADIUS} />
-
-            <main className="courses-section" id="courses">
-                <div className="courses-inner">
-                    <h2 className="courses-heading">Courses</h2>
-                    <p className="courses-subhead">
-                        Live pricing, adjusted to where you're browsing from.
-                    </p>
-                    <SkillpathCourses accentColor={ACCENT_COLOR} cornerRadius={CARD_RADIUS} />
-                </div>
-            </main>
-
-            <Footer />
+            <Routes>
+                <Route path="/" element={<HomePage accentColor={ACCENT_COLOR} cornerRadius={CARD_RADIUS} />} />
+                {/* Catch-all — matches any path that isn't "/" above. */}
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
         </>
     )
 }
